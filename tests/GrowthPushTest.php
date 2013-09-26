@@ -20,6 +20,24 @@ class GrowthPushTest extends PHPUnit_Framework_TestCase {
 
 	}
 
+	public function testFetchNotifications() {
+
+		$notifications = $this->growthPush->fetchNotifications(1, 1);
+
+		$this->assertTrue(is_array($notifications));
+
+	}
+
+	public function testFetchNotificationsWithBadLimit() {
+
+		try {
+			$client = $this->growthPush->fetchNotifications(1, 10000);
+			$this->fail();
+		} catch(GrowthPush\GrowthPushException $e) {
+		}
+
+	}
+
 	public function testCreateClient() {
 
 		$token = hash('sha256', rand());

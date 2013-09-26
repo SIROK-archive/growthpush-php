@@ -2,6 +2,7 @@
 
 require (dirname(__FILE__) . '/src/Client.php');
 require (dirname(__FILE__) . '/src/Event.php');
+require (dirname(__FILE__) . '/src/Notification.php');
 require (dirname(__FILE__) . '/src/Tag.php');
 require (dirname(__FILE__) . '/src/HttpClient.php');
 require (dirname(__FILE__) . '/src/HttpResponse.php');
@@ -11,7 +12,7 @@ class GrowthPush {
 
 	const OS_IOS = 'ios';
 	const OS_ANDROID = 'android';
-	
+
 	const ENVIRONMENT_PRODUCTION = 'production';
 	const ENVIRONMENT_DEVELOPMENT = 'development';
 
@@ -24,6 +25,12 @@ class GrowthPush {
 		$this->applicationId = $applicationId;
 		$this->secret = $secret;
 		$this->environment = $environment;
+
+	}
+
+	public function fetchNotifications($page = 1, $limit = 100) {
+
+		return GrowthPush\Notification::fetch($this, $page, $limit);
 
 	}
 
