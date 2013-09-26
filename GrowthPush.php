@@ -37,6 +37,12 @@ class GrowthPush {
 
 	}
 
+	public function fetchTags($tagId, $exclusiveClientId = null, $order = GrowthPush::ORDER_ASCENDING, $limit = 1000) {
+
+		return GrowthPush\Tag::fetch($this, $tagId, $exclusiveClientId, $order, $limit);
+
+	}
+
 	public function fetchNotifications($page = 1, $limit = 100) {
 
 		return GrowthPush\Notification::fetch($this, $page, $limit);

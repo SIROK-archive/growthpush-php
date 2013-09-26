@@ -11,7 +11,29 @@ class Tag {
 	private $value = null;
 	private $client = null;
 
-	public function __construct($client, $name, $value = null) {
+	public function __construct($arg0, $arg1 = null, $arg2 = null) {
+
+		if (is_null($arg1)) {
+			$this->constructWithAttributes($arg0);
+			return;
+		}
+
+		if (is_null($arg2)) {
+			$this->constructWithClientAndName($arg0, $arg1);
+			return;
+		}
+
+		$this->constructWithClientAndName($arg0, $arg1, $arg2);
+
+	}
+
+	private function constructWithAttributes($attributes) {
+
+		$this->set($attributes);
+
+	}
+
+	private function constructWithClientAndName($client, $name, $value = null) {
 
 		$this->client = $client;
 		$this->name = $name;
@@ -73,6 +95,30 @@ class Tag {
 
 	public function getValue() {
 		return $this->value;
+	}
+
+	public static function fetch($growthPush, $tagId, $exclusiveClientId = null, $order = GrowthPush::ORDER_ASCENDING, $limit = 1000) {
+
+		try {
+			$httpResponse = HttpClient::getInstance()->get('tags', array(
+				'tagId' => $tagId,
+				'secret' => $growthPush->getSecret(),
+				'exclusiveClientId' => $exclusiveClientId,
+				'order' => $order,
+				'limit' => $limit,
+			));
+		} catch(GrowthPushException $e) {
+			throw new GrowthPushException('Failed to fetch tags: ' . $e->getMessage());
+		}
+
+		$body = json_decode($httpResponse->getBody(), true);
+
+		$tags = array();
+		foreach ($body as $attributes)
+			$tags[] = new Tag($attributes);
+
+		return $tags;
+
 	}
 
 }

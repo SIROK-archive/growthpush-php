@@ -31,7 +31,7 @@ class GrowthPushTest extends PHPUnit_Framework_TestCase {
 	public function testFetchNotificationsWithBadLimit() {
 
 		try {
-			$client = $this->growthPush->fetchNotifications(1, 10000);
+			$this->growthPush->fetchNotifications(1, 10000);
 			$this->fail();
 		} catch(GrowthPush\GrowthPushException $e) {
 		}
@@ -46,10 +46,28 @@ class GrowthPushTest extends PHPUnit_Framework_TestCase {
 
 	}
 
-	public function testFetchEventsWithBadGoal() {
+	public function testFetchEventsWithBadGoalId() {
 
 		try {
 			$client = $this->growthPush->fetchEvents(1000000);
+			$this->fail();
+		} catch(GrowthPush\GrowthPushException $e) {
+		}
+
+	}
+
+	public function testFetchTags() {
+
+		$tags = $this->growthPush->fetchTags(TestConfiguration::TAG_ID);
+
+		$this->assertTrue(is_array($tags));
+
+	}
+
+	public function testFetchEventsWithBadTagId() {
+
+		try {
+			$this->growthPush->fetchTags(1000000);
 			$this->fail();
 		} catch(GrowthPush\GrowthPushException $e) {
 		}
