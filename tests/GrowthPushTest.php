@@ -38,6 +38,24 @@ class GrowthPushTest extends PHPUnit_Framework_TestCase {
 
 	}
 
+	public function testFetchEvents() {
+
+		$events = $this->growthPush->fetchEvents(TestConfiguration::GOAL_ID);
+
+		$this->assertTrue(is_array($events));
+
+	}
+
+	public function testFetchEventsWithBadGoal() {
+
+		try {
+			$client = $this->growthPush->fetchEvents(1000000);
+			$this->fail();
+		} catch(GrowthPush\GrowthPushException $e) {
+		}
+
+	}
+
 	public function testCreateClient() {
 
 		$token = hash('sha256', rand());

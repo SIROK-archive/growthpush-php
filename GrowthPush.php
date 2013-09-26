@@ -16,6 +16,9 @@ class GrowthPush {
 	const ENVIRONMENT_PRODUCTION = 'production';
 	const ENVIRONMENT_DEVELOPMENT = 'development';
 
+	const ORDER_ASCENDING = 'ascending';
+	const ORDER_DESCENDING = 'descending';
+
 	private $applicationId = null;
 	private $secret = null;
 	private $environment = null;
@@ -25,6 +28,12 @@ class GrowthPush {
 		$this->applicationId = $applicationId;
 		$this->secret = $secret;
 		$this->environment = $environment;
+
+	}
+
+	public function fetchEvents($goalId, $exclusiveTimestamp = null, $order = GrowthPush::ORDER_ASCENDING, $limit = 1000) {
+
+		return GrowthPush\Event::fetch($this, $goalId, $exclusiveTimestamp, $order, $limit);
 
 	}
 
