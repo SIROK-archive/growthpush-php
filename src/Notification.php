@@ -3,6 +3,7 @@
 namespace GrowthPush;
 use GrowthPush\HttpClient;
 use GrowthPush\GrowthPushException;
+use GrowthPush\Trial;
 
 class Notification {
 
@@ -12,7 +13,7 @@ class Notification {
 	private $tagId = null;
 	private $status = null;
 	private $created = null;
-	private $trials = null;
+	private $trials = array();
 
 	public function __construct($attributes) {
 
@@ -28,7 +29,9 @@ class Notification {
 		$this->tagId = $attributes['tagId'];
 		$this->status = $attributes['status'];
 		$this->created = $attributes['created'];
-		$this->trials = $attributes['trials'];
+		if (is_array($attributes['trials']))
+			foreach ($attributes['trials'] as $trial)
+				$this->trials[] = new Trial($trial);
 
 	}
 

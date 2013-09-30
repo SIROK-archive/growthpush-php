@@ -4,6 +4,7 @@ require (dirname(__FILE__) . '/src/Client.php');
 require (dirname(__FILE__) . '/src/Event.php');
 require (dirname(__FILE__) . '/src/Notification.php');
 require (dirname(__FILE__) . '/src/Tag.php');
+require (dirname(__FILE__) . '/src/Trial.php');
 require (dirname(__FILE__) . '/src/HttpClient.php');
 require (dirname(__FILE__) . '/src/HttpResponse.php');
 require (dirname(__FILE__) . '/src/GrowthPushException.php');
