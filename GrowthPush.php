@@ -2,7 +2,9 @@
 
 require (dirname(__FILE__) . '/src/Client.php');
 require (dirname(__FILE__) . '/src/Event.php');
+require (dirname(__FILE__) . '/src/Notification.php');
 require (dirname(__FILE__) . '/src/Tag.php');
+require (dirname(__FILE__) . '/src/Trial.php');
 require (dirname(__FILE__) . '/src/HttpClient.php');
 require (dirname(__FILE__) . '/src/HttpResponse.php');
 require (dirname(__FILE__) . '/src/GrowthPushException.php');
@@ -11,9 +13,12 @@ class GrowthPush {
 
 	const OS_IOS = 'ios';
 	const OS_ANDROID = 'android';
-	
+
 	const ENVIRONMENT_PRODUCTION = 'production';
 	const ENVIRONMENT_DEVELOPMENT = 'development';
+
+	const ORDER_ASCENDING = 'ascending';
+	const ORDER_DESCENDING = 'descending';
 
 	private $applicationId = null;
 	private $secret = null;
@@ -24,6 +29,24 @@ class GrowthPush {
 		$this->applicationId = $applicationId;
 		$this->secret = $secret;
 		$this->environment = $environment;
+
+	}
+
+	public function fetchEvents($goalId, $exclusiveTimestamp = null, $order = GrowthPush::ORDER_ASCENDING, $limit = 1000) {
+
+		return GrowthPush\Event::fetch($this, $goalId, $exclusiveTimestamp, $order, $limit);
+
+	}
+
+	public function fetchTags($tagId, $exclusiveClientId = null, $order = GrowthPush::ORDER_ASCENDING, $limit = 1000) {
+
+		return GrowthPush\Tag::fetch($this, $tagId, $exclusiveClientId, $order, $limit);
+
+	}
+
+	public function fetchNotifications($page = 1, $limit = 100) {
+
+		return GrowthPush\Notification::fetch($this, $page, $limit);
 
 	}
 

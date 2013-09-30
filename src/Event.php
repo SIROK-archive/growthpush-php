@@ -12,11 +12,90 @@ class Event {
 	private $value = null;
 	private $client = null;
 
-	public function __construct($client, $name, $value = null) {
+	public function __construct($arg0, $arg1 = null, $arg2 = null) {
+
+		if (is_null($arg1)) {
+			$this->constructWithAttributes($arg0);
+			return;
+		}
+
+		if (is_null($arg2)) {
+			$this->constructWithClientAndName($arg0, $arg1);
+			return;
+		}
+
+		$this->constructWithClientAndName($arg0, $arg1, $arg2);
+
+	}
+
+	private function constructWithAttributes($attributes) {
+
+		$this->set($attributes);
+
+	}
+
+	private function constructWithClientAndName($client, $name, $value = null) {
 
 		$this->client = $client;
 		$this->name = $name;
 		$this->value = $value;
+
+	}
+
+	private function set($attributes) {
+
+		if (array_key_exists('goalId', $attributes))
+			$this->goalId = $attributes['goalId'];
+		if (array_key_exists('timestamp', $attributes))
+			$this->timestamp = $attributes['timestamp'];
+		if (array_key_exists('clientId', $attributes))
+			$this->clientId = $attributes['clientId'];
+		if (array_key_exists('value', $attributes))
+			$this->value = $attributes['value'];
+
+	}
+
+	public function getName() {
+		return $this->name;
+	}
+
+	public function getGoalId() {
+		return $this->goalId;
+	}
+
+	public function getTimestamp() {
+		return $this->timestamp;
+	}
+
+	public function getClientId() {
+		return $this->clientId;
+	}
+
+	public function getValue() {
+		return $this->value;
+	}
+
+	public static function fetch($growthPush, $goalId, $exclusiveTimestamp = null, $order = GrowthPush::ORDER_ASCENDING, $limit = 1000) {
+
+		try {
+			$httpResponse = HttpClient::getInstance()->get('events', array(
+				'goalId' => $goalId,
+				'secret' => $growthPush->getSecret(),
+				'exclusiveTimestamp' => $exclusiveTimestamp,
+				'order' => $order,
+				'limit' => $limit,
+			));
+		} catch(GrowthPushException $e) {
+			throw new GrowthPushException('Failed to fetch events: ' . $e->getMessage());
+		}
+
+		$body = json_decode($httpResponse->getBody(), true);
+
+		$events = array();
+		foreach ($body as $attributes)
+			$events[] = new Event($attributes);
+
+		return $events;
 
 	}
 
@@ -50,35 +129,6 @@ class Event {
 
 		return $this;
 
-	}
-
-	private function set($attributes) {
-
-		$this->goalId = $attributes['goalId'];
-		$this->timestamp = $attributes['timestamp'];
-		$this->clientId = $attributes['clientId'];
-		$this->value = $attributes['value'];
-
-	}
-
-	public function getName() {
-		return $this->name;
-	}
-
-	public function getGoalId() {
-		return $this->goalId;
-	}
-
-	public function getTimestamp() {
-		return $this->timestamp;
-	}
-
-	public function getClientId() {
-		return $this->clientId;
-	}
-
-	public function getValue() {
-		return $this->value;
 	}
 
 }
