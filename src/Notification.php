@@ -23,15 +23,22 @@ class Notification {
 
 	private function set($attributes) {
 
-		$this->id = $attributes['id'];
-		$this->applicationId = $attributes['applicationId'];
-		$this->segmentId = $attributes['segmentId'];
-		$this->tagId = $attributes['tagId'];
-		$this->status = $attributes['status'];
-		$this->created = $attributes['created'];
-		if (is_array($attributes['trials']))
-			foreach ($attributes['trials'] as $trial)
-				$this->trials[] = new Trial($trial);
+		if (array_key_exists('id', $attributes))
+			$this->id = $attributes['id'];
+		if (array_key_exists('applicationId', $attributes))
+			$this->applicationId = $attributes['applicationId'];
+		if (array_key_exists('segmentId', $attributes))
+			$this->segmentId = $attributes['segmentId'];
+		if (array_key_exists('tagId', $attributes))
+			$this->tagId = $attributes['tagId'];
+		if (array_key_exists('status', $attributes))
+			$this->status = $attributes['status'];
+		if (array_key_exists('created', $attributes))
+			$this->created = $attributes['created'];
+		if (array_key_exists('trials', $attributes))
+			if (is_array($attributes['trials']))
+				foreach ($attributes['trials'] as $trial)
+					$this->trials[] = new Trial($trial);
 
 	}
 

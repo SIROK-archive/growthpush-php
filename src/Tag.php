@@ -41,43 +41,14 @@ class Tag {
 
 	}
 
-	public function save($growthPush) {
-
-		try {
-			if ($this->client->getId() && $this->client->getCode()) {
-				$httpResponse = HttpClient::getInstance()->post('tags', array(
-					'clientId' => $this->client->getId(),
-					'code' => $this->client->getCode(),
-					'name' => $this->name,
-					'value' => $this->value,
-				));
-			} else if ($this->client->getToken()) {
-				$httpResponse = HttpClient::getInstance()->post('tags', array(
-					'applicationId' => $growthPush->getApplicationId(),
-					'secret' => $growthPush->getSecret(),
-					'token' => $this->client->getToken(),
-					'name' => $this->name,
-					'value' => $this->value,
-				));
-			} else {
-				throw new GrowthPushException('Failed to save tag: Invalid client');
-			}
-		} catch(GrowthPushException $e) {
-			throw new GrowthPushException('Failed to save tag: ' . $e->getMessage());
-		}
-
-		$body = json_decode($httpResponse->getBody(), true);
-		$this->set($body);
-
-		return $this;
-
-	}
-
 	private function set($attributes) {
 
-		$this->tagId = $attributes['tagId'];
-		$this->clientId = $attributes['clientId'];
-		$this->value = $attributes['value'];
+		if (array_key_exists('tagId', $attributes))
+			$this->tagId = $attributes['tagId'];
+		if (array_key_exists('clientId', $attributes))
+			$this->clientId = $attributes['clientId'];
+		if (array_key_exists('value', $attributes))
+			$this->value = $attributes['value'];
 
 	}
 
@@ -118,6 +89,38 @@ class Tag {
 			$tags[] = new Tag($attributes);
 
 		return $tags;
+
+	}
+
+	public function save($growthPush) {
+
+		try {
+			if ($this->client->getId() && $this->client->getCode()) {
+				$httpResponse = HttpClient::getInstance()->post('tags', array(
+					'clientId' => $this->client->getId(),
+					'code' => $this->client->getCode(),
+					'name' => $this->name,
+					'value' => $this->value,
+				));
+			} else if ($this->client->getToken()) {
+				$httpResponse = HttpClient::getInstance()->post('tags', array(
+					'applicationId' => $growthPush->getApplicationId(),
+					'secret' => $growthPush->getSecret(),
+					'token' => $this->client->getToken(),
+					'name' => $this->name,
+					'value' => $this->value,
+				));
+			} else {
+				throw new GrowthPushException('Failed to save tag: Invalid client');
+			}
+		} catch(GrowthPushException $e) {
+			throw new GrowthPushException('Failed to save tag: ' . $e->getMessage());
+		}
+
+		$body = json_decode($httpResponse->getBody(), true);
+		$this->set($body);
+
+		return $this;
 
 	}
 

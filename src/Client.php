@@ -45,14 +45,22 @@ class Client {
 
 	private function set($attributes) {
 
-		$this->id = $attributes['id'];
-		$this->applicationId = $attributes['applicationId'];
-		$this->code = $attributes['code'];
-		$this->token = $attributes['token'];
-		$this->os = $attributes['os'];
-		$this->environment = $attributes['environment'];
-		$this->status = $attributes['status'];
-		$this->created = $attributes['created'];
+		if (array_key_exists('id', $attributes))
+			$this->id = $attributes['id'];
+		if (array_key_exists('applicationId', $attributes))
+			$this->applicationId = $attributes['applicationId'];
+		if (array_key_exists('code', $attributes))
+			$this->code = $attributes['code'];
+		if (array_key_exists('token', $attributes))
+			$this->token = $attributes['token'];
+		if (array_key_exists('os', $attributes))
+			$this->os = $attributes['os'];
+		if (array_key_exists('environment', $attributes))
+			$this->environment = $attributes['environment'];
+		if (array_key_exists('status', $attributes))
+			$this->status = $attributes['status'];
+		if (array_key_exists('created', $attributes))
+			$this->created = $attributes['created'];
 
 	}
 
