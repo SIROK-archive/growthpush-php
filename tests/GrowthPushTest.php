@@ -194,4 +194,42 @@ class GrowthPushTest extends PHPUnit_Framework_TestCase {
 
 	}
 
+	public function testCreateNotification() {
+
+		$api_notification = $this->growthPush->createNotification(TestConfiguration::TEXT, TestConfiguration::QUERY, TestConfiguration::SOUND, TestConfiguration::BADGE);
+
+		$this->assertTrue($api_notification->getClientIds() >= 0);
+
+	}
+
+	public function testCreateNotificationEmptyText() {
+
+		try {
+			$api_notification = $this->growthPush->createNotification(null);
+			$this->fail();
+		} catch(GrowthPush\GrowthPushException $e) {
+		}
+
+	}
+
+	public function testCreateNotificationUnparsableQuery() {
+
+		try {
+			$api_notification = $this->growthPush->createNotification(TestConfiguration::TEXT, 'unparsableQuery');
+			$this->fail();
+		} catch(GrowthPush\GrowthPushException $e) {
+		}
+
+	}
+
+	public function testCreateNotificationUnparsableExtra() {
+
+		try {
+			$api_notification = $this->growthPush->createNotification(TestConfiguration::TEXT, TestConfiguration::QUERY, TestConfiguration::SOUND, TestConfiguration::BADGE, 'unparsableExtra');
+			$this->fail();
+		} catch(GrowthPush\GrowthPushException $e) {
+		}
+
+	}
+
 }

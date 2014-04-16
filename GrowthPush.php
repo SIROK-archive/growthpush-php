@@ -1,5 +1,6 @@
 <?php
 
+require (dirname(__FILE__) . '/src/ApiNotification.php');
 require (dirname(__FILE__) . '/src/Client.php');
 require (dirname(__FILE__) . '/src/Event.php');
 require (dirname(__FILE__) . '/src/Notification.php');
@@ -74,6 +75,13 @@ class GrowthPush {
 
 		$tag = new GrowthPush\Tag($client, $name, $value);
 		return $tag->save($this);
+
+	}
+
+	public function createNotification($text, $query = null, $sound = false, $badge = false, $extra = null) {
+
+		$api_notification = new GrowthPush\ApiNotification($text, $query, $sound, $badge, $extra);
+		return $api_notification->save($this);
 
 	}
 

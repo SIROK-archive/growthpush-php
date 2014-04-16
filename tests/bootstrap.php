@@ -10,5 +10,10 @@ class TestConfiguration {
 	const CLIENT_ID = 763605;
 	const GOAL_ID = 15;
 	const TAG_ID = 103;
+	const TEXT = 'API経由配信';
+	const QUERY = '{"type":"tag", "tagId":103, "operator":"equal", "value":"male"}';
+	const SOUND = false;
+	const BADGE = false;
+	const EXTRA = null;
 
 }
