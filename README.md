@@ -24,6 +24,14 @@ You can tag the devices.
 $tag = $growthPush->createTag('DEVICE_TOKEN', 'Gender', 'male');
 ```
 
+## Push Notifications
+
+You can send push notification to device's your application has.
+
+```php
+$apiNotification = $this->growthPush->createNotification('text', 'segmentation query json', 'true/false for sound', 'true/false for badge', 'custom json in payload');
+```
+
 That's all. Client devices can be browsed with dashboard. You can send push notifications to the devices and analyze the events.
 
 ## License
