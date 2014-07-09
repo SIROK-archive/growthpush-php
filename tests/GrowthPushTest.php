@@ -196,7 +196,7 @@ class GrowthPushTest extends PHPUnit_Framework_TestCase {
 
 	public function testCreateNotification() {
 
-		$api_notification = $this->growthPush->createNotification(TestConfiguration::TEXT, TestConfiguration::QUERY, TestConfiguration::SOUND, TestConfiguration::BADGE);
+		$api_notification = $this->growthPush->createNotification(TestConfiguration::TEXT, TestConfiguration::QUERY, TestConfiguration::SOUND, TestConfiguration::BADGE, TestConfiguration::DURATION);
 
 		$this->assertTrue($api_notification->getClientIds() >= 0);
 
