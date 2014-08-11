@@ -10,15 +10,17 @@ class ApiNotification {
 	private $sound = false;
 	private $badge = false;
 	private $extra = null;
+	private $duration = null;
 	private $clientIds = array();
 
-	public function __construct($text, $query = null, $sound = null, $badge = null, $extra = null) {
+	public function __construct($text, $query = null, $sound = null, $badge = null, $extra = null, $duration = null) {
 
 		$this->text = $text;
 		$this->query = $query;
 		$this->sound = (boolean)$sound;
 		$this->badge = (boolean)$badge;
 		$this->extra = $extra;
+		$this->duration = $duration;
 
 	}
 
@@ -39,8 +41,9 @@ class ApiNotification {
 				'query' => $this->query,
 				'sound' => (boolean)$this->sound,
 				'badge' => (boolean)$this->badge,
-				'extra' => $this->extra
-			));
+				'extra' => $this->extra,
+				'duration' => $this->duration
+			), 2);
 		} catch(GrowthPushException $e) {
 			throw new GrowthPushException('Failed to save notification: ' . $e->getMessage());
 		}
@@ -70,6 +73,10 @@ class ApiNotification {
 
 	public function getExtra() {
 		return $this->extra;
+	}
+
+	public function getDuration() {
+		return $this->duration;
 	}
 
 	public function getClientIds() {

@@ -78,9 +78,9 @@ class GrowthPush {
 
 	}
 
-	public function createNotification($text, $query = null, $sound = false, $badge = false, $extra = null) {
+	public function createNotification($text, $query = null, $sound = false, $badge = false, $extra = null, $duration = null) {
 
-		$api_notification = new GrowthPush\ApiNotification($text, $query, $sound, $badge, $extra);
+		$api_notification = new GrowthPush\ApiNotification($text, $query, $sound, $badge, $extra, $duration);
 		return $api_notification->save($this);
 
 	}

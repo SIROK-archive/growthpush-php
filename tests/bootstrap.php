@@ -15,5 +15,6 @@ class TestConfiguration {
 	const SOUND = false;
 	const BADGE = false;
 	const EXTRA = null;
+	const DURATION = 100000;
 
 }
