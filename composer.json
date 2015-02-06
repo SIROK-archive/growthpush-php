@@ -1,0 +1,27 @@
+{
+    "name": "SIROK/growthpush-php",
+    "type": "library",
+    "description": "GrowthPush is push notification and analysis platform for smart devices. GrowthPush SDK for PHP provides registration function of client devices and events.",
+    "keywords": ["push notification", "sdk", "GrowthPush"],
+    "homepage": "http://ja.growthpush.com/",
+    "support": {
+        "issues": "https://github.com/SIROK/growthpush-php/issues",
+        "source": "https://github.com/SIROK/growthpush-php"
+    },
+    "authors": [
+        {
+            "name": "Naoyuki Kataoka",
+            "email": "kataokanaoyuki@gmail.com",
+            "role": "Maintainer"
+        }
+    ],
+    "license": [
+        "Apache-2.0"
+    ],
+    "require-dev": {
+        "phpunit/phpunit": "3.7.*"
+    },
+    "autoload": {
+        "classmap": ["GrowthPush.php"]
+    }
+}
