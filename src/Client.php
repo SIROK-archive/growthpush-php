@@ -95,5 +95,4 @@ class Client {
 	public function getCreated() {
 		return $this->created;
 	}
-
 }
