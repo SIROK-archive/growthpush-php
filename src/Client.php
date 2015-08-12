@@ -108,7 +108,7 @@ class Client {
         try {
             $id           = $this->getId();
             $httpResponse = HttpClient::getInstance()->put('clients/' . $id, array(
-                'code'        => $growthPush->getSecret(),
+                'code'        => $this->getCode(),
                 'token'       => $this->token,
                 'environment' => $growthPush->getEnvironment(),
             ));
