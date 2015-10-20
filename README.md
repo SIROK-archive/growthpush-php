@@ -1,6 +1,8 @@
 GrowthPush SDK for PHP
 ==================
 
+:rotating_light: **This SDK is no longer maintained** :rotating_light:  
+
 GrowthPush is push notification and analysis platform for smart devices. GrowthPush SDK for PHP provides registration function of client devices and events.
 
 ```php
