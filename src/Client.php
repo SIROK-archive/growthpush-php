@@ -96,4 +96,30 @@ class Client {
 		return $this->created;
 	}
 
+    /**
+     * @param \GrowthPush $growthPush
+     *
+     * @return \GrowthPush::Client
+     *
+     * @throws \GrowthPush\GrowthPushException
+     */
+    public function update($growthPush)
+    {
+        try {
+            $id           = $this->getId();
+            $httpResponse = HttpClient::getInstance()->put('clients/' . $id, array(
+                'code'        => $this->getCode(),
+                'token'       => $this->token,
+                'environment' => $growthPush->getEnvironment(),
+            ));
+        } catch (GrowthPushException $e) {
+            throw new GrowthPushException('Failed to update client: ' . $e->getMessage());
+        }
+
+        $body = json_decode($httpResponse->getBody(), true);
+        $this->set($body);
+
+        return $this;
+    }
+
 }
